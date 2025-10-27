@@ -17,7 +17,7 @@ createRoot(document.getElementById("root")!).render(
     <QueryClientProvider client={queryClient}>
       <React.StrictMode>
         {/* Router Fix: Use the new repository name as the basename */}
-        <BrowserRouter basename="/Data-Analyst/">
+        <BrowserRouter basename="/data-scientist/">
           <App />
         </BrowserRouter>
       </React.StrictMode>
