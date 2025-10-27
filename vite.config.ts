@@ -10,7 +10,7 @@ const __dirname = path.dirname(__filename);
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }: { mode: string }) => ({
-  // CRITICAL FIX: Base path is now the new repository name
+  // CRITICAL FIX: Base path must match the GitHub repository name EXACTLY
   base: "/Data-Scientist/", 
   
   server: {
