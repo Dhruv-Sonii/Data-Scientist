@@ -10,8 +10,8 @@ const __dirname = path.dirname(__filename);
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }: { mode: string }) => ({
-  // This must be set for GitHub Pages deployment
-  base: "/dhruvsonii/", 
+  // CRITICAL FIX: Base path is now the new repository name
+  base: "/Data-Analyst/", 
   
   server: {
     host: "::",
