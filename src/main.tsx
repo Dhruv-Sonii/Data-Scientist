@@ -1,18 +1,22 @@
 import { createRoot } from "react-dom/client";
-import { BrowserRouter } from "react-router-dom"; // <-- NEW IMPORT
+import { BrowserRouter } from "react-router-dom"; 
 import App from "./App.tsx";
 import "./index.css";
-import React from "react"; // Added to use <React.StrictMode>
+import React from "react"; 
+// NEW IMPORTS FOR TANSTACK QUERY
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'; 
 
-// This function wraps the main component with the necessary router configuration.
+// 1. Initialize the Query Client outside the component
+const queryClient = new QueryClient();
+
 createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    {/* CRITICAL FIX: We wrap the App with BrowserRouter and set the basename.
-      The basename tells the router that all links should be relative to 
-      the GitHub repository path '/dhruvsonii/'.
-    */}
-    <BrowserRouter basename="/dhruvsonii/">
-      <App />
-    </BrowserRouter>
+    {/* 2. Wrap everything in the QueryClientProvider */}
+    <QueryClientProvider client={queryClient}>
+        {/* Router Fix (Already done) */}
+        <BrowserRouter basename="/dhruvsonii/">
+          <App />
+        </BrowserRouter>
+    </QueryClientProvider>
   </React.StrictMode>
 );
