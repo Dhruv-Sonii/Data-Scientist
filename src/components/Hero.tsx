@@ -1,3 +1,4 @@
+// src/components/Hero.tsx
 import { ArrowRight, Linkedin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import heroBg from "@/assets/hero-bg.jpg";
@@ -9,13 +10,19 @@ const Hero = () => {
   };
 
   return (
-    <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section 
+      id="hero" 
+      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+      // Added inline style for immediate dark background while image loads
+      style={{ backgroundColor: 'hsl(30 8% 12%)' }} 
+    >
       {/* Background with overlay */}
       <div className="absolute inset-0">
         <img 
           src={heroBg} 
           alt="Data Visualization Background" 
           className="w-full h-full object-cover opacity-30"
+          loading="lazy" // Added lazy loading attribute
         />
         <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/90 to-background"></div>
       </div>
@@ -24,15 +31,15 @@ const Hero = () => {
       <div className="container mx-auto px-6 relative z-10">
         <div className="max-w-4xl mx-auto text-center space-y-8 animate-fade-in">
           <h1 className="text-5xl md:text-7xl font-bold">
-            Turning <span className="text-primary">Raw Data</span>
+            Data Science Excellence:
             <br />
-            into Actionable Insights
+            From <span className="text-primary">Model</span> to <span className="text-primary">Impact</span>
           </h1>
           
           <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto animate-fade-in-delayed">
-            Data Science Consultant specializing in robust Data Cleaning and impactful Power BI Dashboarding.
+            Results-driven Data Scientist specializing in **ML Model Deployment**, **NLP**, and **Actionable BI Reporting**.
             <br />
-            <span className="text-primary/80">Based in Mumbai, India.</span> Ready to solve your most complex data challenges.
+            <span className="text-primary/80">Seeking a challenging role in Mumbai, India.</span> Ready to join your team and drive data-first innovation.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-6 animate-fade-in-delayed">
@@ -41,7 +48,7 @@ const Hero = () => {
               onClick={scrollToContact}
               className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-[var(--glow-gold)] hover:shadow-[var(--glow-gold)] hover:scale-105 transition-all duration-300 group"
             >
-              Start Your Project
+              Start the Conversation
               <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
             </Button>
             
@@ -52,7 +59,7 @@ const Hero = () => {
               className="border-primary/50 text-foreground hover:bg-primary/10 hover:border-primary transition-all duration-300"
             >
               <Linkedin className="mr-2" />
-              View LinkedIn
+              View LinkedIn Profile
             </Button>
           </div>
         </div>
