@@ -16,7 +16,6 @@ interface NavLink {
     link?: string;      
 }
 
-
 const Navigation = ({ mode }: NavigationProps) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -29,9 +28,9 @@ const Navigation = ({ mode }: NavigationProps) => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // SIMPLIFICATION: Use direct route paths. The basename handles the prefix.
-  const rootPath = "/"; // Landing Page
-  const basePath = mode === "recruiter" ? "/recruiter" : "/freelance"; // Persona Root Page
+  // SIMPLIFICATION: Use direct route paths. HashRouter handles the rest.
+  const rootPath = "/"; // Links to the Landing Page (i.e., your.site.com/#/)
+  const basePath = mode === "recruiter" ? "/recruiter" : "/freelance"; // Links to the Persona Root Page (i.e., your.site.com/#/recruiter)
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -50,7 +49,7 @@ const Navigation = ({ mode }: NavigationProps) => {
 
   const recruiterLinks: NavLink[] = [
     ...internalLinks,
-    // Resume link: Now correctly linked for deployment.
+    // Resume link: Correctly set to the absolute path for static assets.
     { label: "Download Resume", id: "resume", external: true, link: "/Data-Scientist/resume.pdf" } 
   ];
 
@@ -71,7 +70,7 @@ const Navigation = ({ mode }: NavigationProps) => {
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           <Link
-            to={rootPath} // FIX: Logo always links to the absolute root ("/")
+            to={rootPath} // FINAL FIX: Link to HashRouter root /
             className="flex items-center gap-3 group"
           >
             <img src={dsLogo} alt="DS Logo" className="w-10 h-10 group-hover:animate-float" />
@@ -81,7 +80,7 @@ const Navigation = ({ mode }: NavigationProps) => {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
             <Link 
-              to={basePath} // Links to the current persona's root (/recruiter or /freelance)
+              to={basePath} 
               className="text-foreground/80 hover:text-primary transition-colors font-medium"
             >
                 Home

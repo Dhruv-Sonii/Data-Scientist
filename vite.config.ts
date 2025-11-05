@@ -1,3 +1,4 @@
+// vite.config.ts
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
@@ -10,8 +11,9 @@ const __dirname = path.dirname(__filename);
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }: { mode: string }) => ({
-  // FIX: Base path is now only defined for production.
-  base: mode === 'production' ? "/Data-Scientist/" : "/", 
+  // FIX: Base path must be the sub-directory for production, but must be '/' (or equivalent) for HashRouter
+  // Since we use HashRouter, we should set the base path to just the repository name
+  base: "/Data-Scientist/", 
   
   server: {
     host: "::",
