@@ -19,10 +19,10 @@ const Recruiter = () => {
       <Competencies /> 
       <Skills mode="recruiter" /> {/* PASSING MODE */}
       <Projects mode="recruiter" /> {/* PASSING MODE */}
-      <WhyWorkWithMe mode="recruiter" /> {/* PASSING MODE */}
-      <Education /> 
-      <Contact /> 
-      <Footer />
+          <WhyWorkWithMe mode="recruiter" /> 
+          <Education />
+          <Contact mode="recruiter" /> {/* ADDED mode prop */}
+          <Footer />
     </div>
   );
 };

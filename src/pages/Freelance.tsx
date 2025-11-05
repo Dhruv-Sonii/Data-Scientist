@@ -23,7 +23,9 @@ const Freelance = () => {
       <Projects mode="freelance" />
       <Skills mode="freelance" />
       <Education /> 
-      <FreelanceContact />
+      <Contact mode="freelance" /> {/* ADDED mode prop - will render null, but keeps structure */}
+      <FreelanceContact /> {/* This is the dedicated form */}
+      <Footer />
       
       <Footer />
     </div>
