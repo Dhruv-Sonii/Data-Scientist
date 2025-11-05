@@ -16,6 +16,11 @@ interface NavLink {
     link?: string;      
 }
 
+// FINAL FIX: We must use the absolute path to the index.html file to reload the HashRouter on GitHub Pages.
+// This is used for the Logo link to reliably return to the Landing Page.
+const ABSOLUTE_ROOT_HTML_PATH = "/Data-Scientist/index.html";
+
+
 const Navigation = ({ mode }: NavigationProps) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -28,9 +33,9 @@ const Navigation = ({ mode }: NavigationProps) => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // SIMPLIFICATION: Use direct route paths. HashRouter handles the rest.
-  const rootPath = "/"; // Links to the Landing Page (i.e., your.site.com/#/)
-  const basePath = mode === "recruiter" ? "/recruiter" : "/freelance"; // Links to the Persona Root Page (i.e., your.site.com/#/recruiter)
+  // Use direct route paths. HashRouter handles the rest.
+  const rootPath = "/"; // Landing Page route for internal navigation (HashRouter)
+  const basePath = mode === "recruiter" ? "/recruiter" : "/freelance"; // Persona Root Page
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -69,13 +74,13 @@ const Navigation = ({ mode }: NavigationProps) => {
     >
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
-          <Link
-            to={rootPath} // FINAL FIX: Link to HashRouter root /
+          <a // CHANGED TO <a> TAG for absolute external link to avoid Router confusion
+            href={mode === "recruiter" ? ABSOLUTE_ROOT_HTML_PATH : "#/"}
             className="flex items-center gap-3 group"
           >
             <img src={dsLogo} alt="DS Logo" className="w-10 h-10 group-hover:animate-float" />
             <span className="text-xl font-bold text-primary">DHRUV SONI ({mode.toUpperCase()})</span>
-          </Link>
+          </a>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
