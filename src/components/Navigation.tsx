@@ -16,10 +16,7 @@ interface NavLink {
     link?: string;      
 }
 
-// FINAL FIX: We must use the absolute path to the index.html file to reload the HashRouter on GitHub Pages.
-// This is used for the Logo link to reliably return to the Landing Page.
-const ABSOLUTE_ROOT_HTML_PATH = "/Data-Scientist/index.html";
-
+// NOTE: ABSOLUTE_ROOT_HTML_PATH is removed. We rely on HashRouter now.
 
 const Navigation = ({ mode }: NavigationProps) => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -74,13 +71,14 @@ const Navigation = ({ mode }: NavigationProps) => {
     >
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
-          <a // CHANGED TO <a> TAG for absolute external link to avoid Router confusion
-            href={mode === "recruiter" ? ABSOLUTE_ROOT_HTML_PATH : "#/"}
+          {/* FIX: Change back to <Link> for smooth transition */}
+          <Link
+            to={rootPath} 
             className="flex items-center gap-3 group"
           >
             <img src={dsLogo} alt="DS Logo" className="w-10 h-10 group-hover:animate-float" />
             <span className="text-xl font-bold text-primary">DHRUV SONI ({mode.toUpperCase()})</span>
-          </a>
+          </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
