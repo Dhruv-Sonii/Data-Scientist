@@ -10,14 +10,18 @@ import { ThemeProvider } from "next-themes";
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'; 
 const queryClient = new QueryClient();
 
+// FIX: Define the base path dynamically. Use the repository name only in production (for GitHub Pages).
+const isProduction = import.meta.env.PROD; 
+const basePath = isProduction ? "/Data-Scientist/" : "/";
+
 createRoot(document.getElementById("root")!).render(
   // 3. Wrap application in necessary providers
   <ThemeProvider defaultTheme="system" attribute="class" enableSystem disableTransitionOnChange>
     {/* Wrap everything in the QueryClientProvider */}
     <QueryClientProvider client={queryClient}>
       <React.StrictMode>
-        {/* Router Fix: Basename must match the repository name EXACTLY */}
-        <BrowserRouter basename="/Data-Scientist/">
+        {/* Router Fix: Use the dynamic basePath */}
+        <BrowserRouter basename={basePath}>
           <App />
         </BrowserRouter>
       </React.StrictMode>

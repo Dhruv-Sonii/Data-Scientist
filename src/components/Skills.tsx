@@ -1,8 +1,14 @@
+// src/components/Skills.tsx
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
-const Skills = () => {
-  const skillCategories = [
+interface SkillsProps {
+  mode: "recruiter" | "freelance";
+}
+
+const Skills = ({ mode }: SkillsProps) => {
+  // Full list of skills for the Recruiter (broad, detailed stack)
+  const recruiterSkillCategories = [
     {
       category: "Python & Libraries",
       skills: ["Pandas", "NumPy", "Scikit-learn", "Matplotlib", "Seaborn"],
@@ -20,7 +26,7 @@ const Skills = () => {
       skills: ["Power BI", "Tableau", "Data Storytelling"],
     },
     {
-      category: "Cloud & Tools",
+      category: "Cloud & MLOps",
       skills: ["AWS S3", "Flask", "Postman", "Git", "Hadoop", "Spark", "SQL"],
     },
     {
@@ -29,13 +35,36 @@ const Skills = () => {
     },
   ];
 
+  // Curated, marketable skills for the Freelancer (focus on immediate value & delivery)
+  const freelanceSkillCategories = [
+    {
+      category: "Core Project Delivery",
+      skills: ["Power BI (Advanced)", "Data Cleaning", "Data Modeling (Star/Snowflake)", "SQL Query Optimization"],
+    },
+    {
+      category: "Machine Learning / Automation",
+      skills: ["Classification", "Regression", "Scikit-learn", "Flask API Development", "Deployment & Testing (Postman)"],
+    },
+    {
+      category: "Python & Data Handling",
+      skills: ["Pandas", "NumPy", "Jupyter", "AWS S3 (Data Access)"],
+    },
+  ];
+  
+  const skillCategories = mode === "recruiter" ? recruiterSkillCategories : freelanceSkillCategories;
+  
   return (
     <section id="skills" className="py-24 bg-gradient-to-b from-secondary/20 to-background">
       <div className="container mx-auto px-6">
         <div className="max-w-5xl mx-auto space-y-12">
           <div className="text-center space-y-4 animate-fade-in">
-            <h2 className="text-4xl md:text-5xl font-bold">Technical Skills</h2>
+            <h2 className="text-4xl md:text-5xl font-bold">{mode === "recruiter" ? "Technical Skill Matrix" : "Project Technology Stack"}</h2>
             <div className="w-20 h-1 bg-primary mx-auto rounded-full"></div>
+            {mode === "freelance" && (
+                <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                    These are the core tools I use to deliver client projects efficiently and reliably.
+                </p>
+            )}
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 animate-fade-in-delayed">

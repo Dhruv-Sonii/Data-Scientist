@@ -10,8 +10,9 @@ const __dirname = path.dirname(__filename);
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }: { mode: string }) => ({
-  // CRITICAL FIX: Base path must match the GitHub repository name EXACTLY
-  base: "/Data-Scientist/", 
+  // FIX: Base path must be empty ("/") for local development (mode != 'production')
+  // We use '/Data-Scientist/' only when building for production (GitHub Pages).
+  base: mode === 'production' ? "/Data-Scientist/" : "/", 
   
   server: {
     host: "::",

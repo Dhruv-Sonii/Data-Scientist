@@ -1,9 +1,23 @@
+// src/components/Navigation.tsx
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import dsLogo from "@/assets/ds-logo.png";
+import { Link } from "react-router-dom"; 
 
-const Navigation = () => {
+interface NavigationProps {
+    mode: "recruiter" | "freelance"; // Define the new prop
+}
+
+// FIX: Define the explicit type for navigation links to prevent TypeScript errors
+interface NavLink {
+    label: string;
+    id: string;
+    external?: boolean; // Optional property
+    link?: string;      // Optional property
+}
+
+const Navigation = ({ mode }: NavigationProps) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -15,6 +29,10 @@ const Navigation = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // FIX: Base path is now simple, matching the App.tsx routes.
+  // It is now '/recruiter' or '/freelance'
+  const basePath = mode === "recruiter" ? "/recruiter" : "/freelance";
+
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
@@ -23,12 +41,26 @@ const Navigation = () => {
     }
   };
 
-  const navLinks = [
+  const internalLinks: NavLink[] = [
     { label: "About", id: "about" },
     { label: "Skills", id: "skills" },
     { label: "Projects", id: "projects" },
     { label: "Contact", id: "contact" },
   ];
+
+  const recruiterLinks: NavLink[] = [
+    ...internalLinks,
+    // NOTE: Update this link with your actual resume path
+    { label: "Download Resume", id: "resume", external: true, link: "/Data-Scientist/resume.pdf" } 
+  ];
+
+  const freelanceLinks: NavLink[] = [
+    ...internalLinks,
+    { label: "Services & Pricing", id: "services", external: false, link: "#services" } 
+  ];
+  
+  const activeLinks = mode === "recruiter" ? recruiterLinks : freelanceLinks;
+
 
   return (
     <nav
@@ -38,24 +70,42 @@ const Navigation = () => {
     >
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
-          <button
-            onClick={() => scrollToSection("hero")}
+          <Link
+            to="/" // FIX: Logo always links to the absolute root ("/") which is the Landing page.
             className="flex items-center gap-3 group"
           >
             <img src={dsLogo} alt="DS Logo" className="w-10 h-10 group-hover:animate-float" />
-            <span className="text-xl font-bold text-primary">DHRUV SONI</span>
-          </button>
+            <span className="text-xl font-bold text-primary">DHRUV SONI ({mode.toUpperCase()})</span>
+          </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
-            {navLinks.map((link) => (
-              <button
-                key={link.id}
-                onClick={() => scrollToSection(link.id)}
-                className="text-foreground/80 hover:text-primary transition-colors font-medium"
-              >
-                {link.label}
-              </button>
+            <Link 
+              to={basePath} // Links to the current persona's root (e.g., /recruiter)
+              className="text-foreground/80 hover:text-primary transition-colors font-medium"
+            >
+                Home
+            </Link>
+            {activeLinks.map((link) => (
+              link.external ? ( 
+                <a
+                  key={link.id}
+                  href={link.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-foreground/80 hover:text-primary transition-colors font-medium"
+                >
+                  {link.label}
+                </a>
+              ) : (
+                <button
+                  key={link.id}
+                  onClick={() => scrollToSection(link.id)}
+                  className="text-foreground/80 hover:text-primary transition-colors font-medium"
+                >
+                  {link.label}
+                </button>
+              )
             ))}
           </div>
 
@@ -73,14 +123,34 @@ const Navigation = () => {
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
           <div className="md:hidden mt-4 pb-4 animate-fade-in">
-            {navLinks.map((link) => (
-              <button
-                key={link.id}
-                onClick={() => scrollToSection(link.id)}
-                className="block w-full text-left py-3 text-foreground/80 hover:text-primary transition-colors font-medium"
-              >
-                {link.label}
-              </button>
+             <Link 
+              to={basePath} 
+              className="block w-full text-left py-3 text-foreground/80 hover:text-primary transition-colors font-medium"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+                Home
+            </Link>
+            {activeLinks.map((link) => (
+              link.external ? ( 
+                <a
+                  key={link.id}
+                  href={link.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block w-full text-left py-3 text-foreground/80 hover:text-primary transition-colors font-medium"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  {link.label}
+                </a>
+              ) : (
+                <button
+                  key={link.id}
+                  onClick={() => scrollToSection(link.id)}
+                  className="block w-full text-left py-3 text-foreground/80 hover:text-primary transition-colors font-medium"
+                >
+                  {link.label}
+                </button>
+              )
             ))}
           </div>
         )}
