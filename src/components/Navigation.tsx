@@ -6,7 +6,7 @@ import dsLogo from "@/assets/ds-logo.png";
 import { Link } from "react-router-dom"; 
 
 interface NavigationProps {
-    mode: "recruiter" | "freelance"; // Define the new prop
+    mode: "recruiter" | "freelance";
 }
 
 interface NavLink {
@@ -14,20 +14,6 @@ interface NavLink {
     id: string;
     external?: boolean; 
     link?: string;      
-}
-
-// Helper function to handle the correct absolute path in a sub-directory
-const getPath = (path: string) => {
-    // Check if we are running in development mode locally
-    const isProduction = import.meta.env.PROD;
-    
-    // If not production, paths start from root '/'
-    if (!isProduction) {
-        return path;
-    }
-    
-    // If production, prepend the base path for GitHub Pages
-    return `/Data-Scientist${path}`;
 }
 
 
@@ -43,8 +29,9 @@ const Navigation = ({ mode }: NavigationProps) => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const rootPath = getPath("/");
-  const basePath = mode === "recruiter" ? getPath("/recruiter") : getPath("/freelance");
+  // SIMPLIFICATION: Use direct route paths. The basename handles the prefix.
+  const rootPath = "/"; // Landing Page
+  const basePath = mode === "recruiter" ? "/recruiter" : "/freelance"; // Persona Root Page
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -63,9 +50,8 @@ const Navigation = ({ mode }: NavigationProps) => {
 
   const recruiterLinks: NavLink[] = [
     ...internalLinks,
-    // FINAL, CORRECT LINK: This absolute path is relative to the base path set by Vite.
-    // It will resolve correctly to https://dhruv-sonii.github.io/Data-Scientist/resume.pdf
-    { label: "Download Resume", id: "resume", external: true, link: "/resume.pdf" } 
+    // Resume link: Now correctly linked for deployment.
+    { label: "Download Resume", id: "resume", external: true, link: "/Data-Scientist/resume.pdf" } 
   ];
 
   const freelanceLinks: NavLink[] = [
@@ -85,7 +71,7 @@ const Navigation = ({ mode }: NavigationProps) => {
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           <Link
-            to={rootPath} 
+            to={rootPath} // FIX: Logo always links to the absolute root ("/")
             className="flex items-center gap-3 group"
           >
             <img src={dsLogo} alt="DS Logo" className="w-10 h-10 group-hover:animate-float" />
@@ -95,20 +81,19 @@ const Navigation = ({ mode }: NavigationProps) => {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
             <Link 
-              to={basePath} 
+              to={basePath} // Links to the current persona's root (/recruiter or /freelance)
               className="text-foreground/80 hover:text-primary transition-colors font-medium"
             >
                 Home
             </Link>
             {activeLinks.map((link) => (
-              // FIX: Use <a> for external/download links, and style them like buttons.
               link.external ? ( 
                 <a
                   key={link.id}
                   href={link.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-foreground/80 hover:text-primary transition-colors font-medium" // Same style as other links
+                  className="text-foreground/80 hover:text-primary transition-colors font-medium"
                 >
                   {link.label}
                 </a>
@@ -139,14 +124,13 @@ const Navigation = ({ mode }: NavigationProps) => {
         {isMobileMenuOpen && (
           <div className="md:hidden mt-4 pb-4 animate-fade-in">
              <Link 
-              to={rootPath} 
+              to={basePath} 
               className="block w-full text-left py-3 text-foreground/80 hover:text-primary transition-colors font-medium"
               onClick={() => setIsMobileMenuOpen(false)}
             >
                 Home
             </Link>
             {activeLinks.map((link) => (
-              // FIX: Use <a> for external/download links in mobile menu too.
               link.external ? ( 
                 <a
                   key={link.id}
