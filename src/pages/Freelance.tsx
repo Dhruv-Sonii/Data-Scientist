@@ -6,26 +6,25 @@ import Projects from "@/components/Projects";
 import Education from "@/components/Education";
 import Footer from "@/components/Footer";
 import Navigation from "@/components/Navigation";
-// These next components still need to be created, but we import them here
-import FreelanceHero from "@/components/FreelanceHero"; 
 import FreelanceContact from "@/components/FreelanceContact"; 
-import Services from "@/components/Services"; 
+// import FreelanceHero from "@/components/FreelanceHero"; // DEBUG: Temporarily commented out
+// import Services from "@/components/Services";           // DEBUG: Temporarily commented out
 
 const Freelance = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Navigation mode="freelance" /> 
       
-      <FreelanceHero />
+      {/* <FreelanceHero /> */} {/* DEBUG: Temporarily commented out */}
       <About mode="freelance" />
       <Competencies />
-      <Services /> 
+      {/* <Services /> */} {/* DEBUG: Temporarily commented out */}
       <Projects mode="freelance" />
       <Skills mode="freelance" />
       <Education /> 
-      <Contact mode="freelance" /> {/* ADDED mode prop - will render null, but keeps structure */}
-      <FreelanceContact /> {/* This is the dedicated form */}
-      <Footer />
+      {/* The original Contact component will return null when mode="freelance" */}
+      {/* The FreelanceContact component is being used instead, so we keep it */}
+      <FreelanceContact />
       
       <Footer />
     </div>
