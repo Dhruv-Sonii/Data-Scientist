@@ -1,5 +1,5 @@
 import { createRoot } from "react-dom/client";
-import { BrowserRouter } from "react-router-dom"; 
+import { HashRouter } from "react-router-dom"; // CHANGED FROM BrowserRouter to HashRouter
 import App from "./App.tsx";
 import "./index.css";
 import React from "react"; 
@@ -10,9 +10,7 @@ import { ThemeProvider } from "next-themes";
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'; 
 const queryClient = new QueryClient();
 
-// FIX: Define the base path dynamically. Use the repository name only in production (for GitHub Pages).
-const isProduction = import.meta.env.PROD; 
-const basePath = isProduction ? "/Data-Scientist/" : "/";
+// FIX: Removed dynamic basePath logic, as HashRouter does not need it.
 
 createRoot(document.getElementById("root")!).render(
   // 3. Wrap application in necessary providers
@@ -20,10 +18,10 @@ createRoot(document.getElementById("root")!).render(
     {/* Wrap everything in the QueryClientProvider */}
     <QueryClientProvider client={queryClient}>
       <React.StrictMode>
-        {/* Router Fix: Use the dynamic basePath */}
-        <BrowserRouter basename={basePath}>
+        {/* Router Fix: Using HashRouter eliminates 404 issues on GitHub Pages sub-routes */}
+        <HashRouter>
           <App />
-        </BrowserRouter>
+        </HashRouter>
       </React.StrictMode>
     </QueryClientProvider>
   </ThemeProvider>
