@@ -64,7 +64,7 @@ const Navigation = ({ mode }: NavigationProps) => {
   const recruiterLinks: NavLink[] = [
     ...internalLinks,
     // Resume link: Now correctly using your file name.
-    { label: "Download Resume", id: "resume", external: true, link: "/Data-Scientist/DS_DHRUV SONI.pdf" } 
+    { label: "Download Resume", id: "resume", external: true, link: "/Data-Scientist/DS_DHRUV_SONI.pdf" } 
   ];
 
   const freelanceLinks: NavLink[] = [
