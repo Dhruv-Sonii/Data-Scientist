@@ -63,8 +63,9 @@ const Navigation = ({ mode }: NavigationProps) => {
 
   const recruiterLinks: NavLink[] = [
     ...internalLinks,
-    // FINAL LINK: This absolute path forces the browser to look in the correct GitHub Pages subdirectory.
-    { label: "Download Resume", id: "resume", external: true, link: "/Data-Scientist/resume.pdf" } 
+    // FINAL, CORRECT LINK: This absolute path is relative to the base path set by Vite.
+    // It will resolve correctly to https://dhruv-sonii.github.io/Data-Scientist/resume.pdf
+    { label: "Download Resume", id: "resume", external: true, link: "/resume.pdf" } 
   ];
 
   const freelanceLinks: NavLink[] = [
