@@ -63,8 +63,8 @@ const Navigation = ({ mode }: NavigationProps) => {
 
   const recruiterLinks: NavLink[] = [
     ...internalLinks,
-    // Resume link: Now correctly using your file name.
-    { label: "Download Resume", id: "resume", external: true, link: "/resume.pdf" } 
+    // FINAL LINK: This absolute path forces the browser to look in the correct GitHub Pages subdirectory.
+    { label: "Download Resume", id: "resume", external: true, link: "/Data-Scientist/resume.pdf" } 
   ];
 
   const freelanceLinks: NavLink[] = [
